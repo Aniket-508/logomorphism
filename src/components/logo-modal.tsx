@@ -3,9 +3,8 @@
 import { useQueryState } from "nuqs";
 import { useCallback, useEffect } from "react";
 
+import LogoDetailView from "@/components/logo-detail-view";
 import { getAdjacentLogo, getLogoById } from "@/constants/logos";
-
-import LogoDetailView from "./logo-detail-view";
 
 export default function LogoModal() {
   const [viewId, setViewId] = useQueryState("view");
