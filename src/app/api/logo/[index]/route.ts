@@ -1,7 +1,8 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import type { NextRequest } from "next/server";
 
-import { logos } from "@/constants/logos";
+import { getLogoById, logos } from "@/constants/logos";
+import { getLogoObjectKey } from "@/lib/r2-keys";
 
 const GET = async (
   _request: NextRequest,
@@ -9,18 +10,18 @@ const GET = async (
 ) => {
   const { index } = await params;
 
-  let key: string;
-
   const num = Number(index);
-  if (Number.isNaN(num)) {
-    key = `logo-${index}.png`;
-  } else {
-    const logo = logos[num % logos.length];
-    key = `logo-${logo.id}.png`;
+  const logo = Number.isNaN(num)
+    ? getLogoById(index)
+    : logos[num % logos.length];
+
+  if (!logo) {
+    return new Response("Not found", { status: 404 });
   }
 
+  const key = getLogoObjectKey(logo.category, logo.id);
   const { env } = getCloudflareContext();
-  const object = await env.LOGOS.get(key);
+  const object = await env.LOGOMORPHISM.get(key);
 
   if (!object) {
     return new Response("Not found", { status: 404 });
