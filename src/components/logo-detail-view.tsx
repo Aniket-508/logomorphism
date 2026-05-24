@@ -16,6 +16,8 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { TooltipButton } from "@/components/ui/tooltip-button";
 import type { Logo } from "@/constants/logos";
+import { ROUTES } from "@/constants/routes";
+import { cn } from "@/lib/utils";
 
 interface Props {
   logo: Logo;
@@ -23,7 +25,6 @@ interface Props {
   onPrev?: () => void;
   onNext?: () => void;
   showNav?: boolean;
-  showBackToGrid?: boolean;
   layout?: "modal" | "page";
 }
 
@@ -33,7 +34,6 @@ const LogoDetailView = ({
   onPrev,
   onNext,
   showNav = false,
-  showBackToGrid = false,
   layout = "modal",
 }: Props) => {
   const [reportOpen, setReportOpen] = useState(false);
@@ -47,14 +47,14 @@ const LogoDetailView = ({
 
   const handleDownload = useCallback(() => {
     const a = document.createElement("a");
-    a.href = `/api/logo/${logo.id}`;
+    a.href = `${ROUTES.API.LOGO}/${logo.id}`;
     a.download = `${logo.brand.replaceAll(/\s+/gu, "-").toLowerCase()}.png`;
     a.click();
   }, [logo]);
 
   const handleAudio = useCallback(() => {
     if (!audioRef.current) {
-      audioRef.current = new Audio(`/api/logo/audio/${logo.id}`);
+      audioRef.current = new Audio(`${ROUTES.API.AUDIO}/${logo.id}`);
       audioRef.current.addEventListener("ended", () => setPlaying(false));
     }
     if (playing) {
@@ -74,7 +74,7 @@ const LogoDetailView = ({
       <div
         className={
           isPage
-            ? "flex flex-col items-center justify-center min-h-screen p-8"
+            ? "flex flex-col w-full items-center justify-center min-h-screen p-8"
             : "fixed inset-0 z-50 flex items-center justify-center bg-black/40"
         }
       >
@@ -107,19 +107,24 @@ const LogoDetailView = ({
         <div
           className={
             isPage
-              ? "relative max-w-lg w-full"
+              ? "relative max-w-4xl flex items-center gap-16 w-full"
               : "relative z-50 bg-popover rounded-2xl shadow-2xl max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto ring-1 ring-foreground/5"
           }
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex items-center justify-center p-8 bg-muted/30">
+          <div
+            className={cn(
+              "flex items-center justify-center",
+              !isPage && "p-8 bg-muted/30"
+            )}
+          >
             <img
-              src={`/api/logo/${logo.id}`}
+              src={`${ROUTES.API.LOGO}/${logo.id}`}
               alt={logo.brand}
-              className="w-48 h-48 object-contain"
+              className={cn("size-48 object-contain", isPage && "size-64")}
               draggable={false}
               onError={(e) => {
-                e.currentTarget.src = "/placeholder.svg";
+                e.currentTarget.src = ROUTES.PLACEHOLDER;
               }}
             />
           </div>
@@ -189,17 +194,6 @@ const LogoDetailView = ({
                 Download
               </Button>
             </div>
-
-            {showBackToGrid && (
-              <div className="pt-1">
-                <a
-                  href={logo.category ? `/${logo.category}` : "/"}
-                  className="inline-block text-sm text-primary hover:underline"
-                >
-                  ← Back to grid
-                </a>
-              </div>
-            )}
           </div>
         </div>
       </div>

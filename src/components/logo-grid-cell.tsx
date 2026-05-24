@@ -4,6 +4,7 @@ import { useQueryState } from "nuqs";
 
 import { logos } from "@/constants/logos";
 import type { Category } from "@/constants/logos";
+import { ROUTES } from "@/constants/routes";
 
 interface Props {
   gridIndex: number;
@@ -44,11 +45,11 @@ export default function LogoGridCell({ gridIndex }: Props) {
     >
       <img
         draggable={false}
-        src={`/api/logo/${logo.id}`}
+        src={`${ROUTES.API.LOGO}/${logo.id}`}
         alt={logo.brand}
         className="w-3/4 h-3/4 object-contain"
         onError={(e) => {
-          e.currentTarget.src = "/placeholder.svg";
+          e.currentTarget.src = ROUTES.PLACEHOLDER;
         }}
       />
     </button>

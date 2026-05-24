@@ -34,10 +34,6 @@ export const createPageMetadata = (
   const canonical = path.startsWith(ROUTES.HOME)
     ? path
     : `${ROUTES.HOME}${path}`;
-  const markdownAlternate =
-    canonical === ROUTES.DOCS || canonical.startsWith(`${ROUTES.DOCS}/`)
-      ? `${canonical}.md`
-      : undefined;
   const resolvedOgImage =
     ogImage ?? `${ROUTES.OG}${canonical === ROUTES.HOME ? "" : canonical}`;
   const resolvedTitle = ogTitle ?? title;
@@ -45,11 +41,6 @@ export const createPageMetadata = (
   return {
     alternates: {
       canonical,
-      ...(markdownAlternate && {
-        types: {
-          "text/markdown": markdownAlternate,
-        },
-      }),
     },
     description,
     openGraph: {

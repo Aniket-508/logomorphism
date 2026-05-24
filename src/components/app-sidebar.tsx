@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { categories, logos } from "@/constants/logos";
 import type { Category } from "@/constants/logos";
+import { ROUTES } from "@/constants/routes";
 
 const countByCategory = (key: string) =>
   logos.filter((l) => l.category === key).length;
@@ -33,14 +34,14 @@ const AppSidebar = () => (
     <SidebarContent>
       <SidebarMenu>
         <SidebarMenuItem>
-          <SidebarMenuButton render={<Link href="/" />}>
+          <SidebarMenuButton render={<Link href={ROUTES.HOME} />}>
             All Logos ({logos.length})
           </SidebarMenuButton>
         </SidebarMenuItem>
         {categories.map((cat) => (
           <SidebarMenuItem key={cat.key}>
             <SidebarMenuButton
-              render={<Link href={`/category/${cat.key}`} />}
+              render={<Link href={`/${cat.key}`} />}
               isActive={true}
               onClick={() => handleSelect(cat.key)}
             >
@@ -53,7 +54,7 @@ const AppSidebar = () => (
     <SidebarFooter>
       <SidebarMenu>
         <SidebarMenuItem>
-          <SidebarMenuButton render={<Link href="/" />}>
+          <SidebarMenuButton render={<Link href={ROUTES.HOME} />}>
             Home Grid
           </SidebarMenuButton>
         </SidebarMenuItem>
