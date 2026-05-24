@@ -6,10 +6,12 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 interface Props {
   isOpen: boolean;
@@ -22,16 +24,20 @@ export default function ReportIssueModal({ isOpen, onClose, brand }: Props) {
   const [description, setDescription] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
     setSubmitted(true);
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent showCloseButton className="p-5">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Report Issue — {brand}</DialogTitle>
+          <DialogDescription>
+            Let us know if there's a problem with this logo. We'll review and
+            fix it.
+          </DialogDescription>
         </DialogHeader>
 
         {submitted ? (
@@ -47,13 +53,12 @@ export default function ReportIssueModal({ isOpen, onClose, brand }: Props) {
               placeholder="Issue title"
               required
             />
-            <textarea
+            <Textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Describe the issue..."
               rows={4}
               required
-              className="h-9 w-full min-w-0 rounded-3xl border border-transparent bg-input/50 px-3 py-1 text-base transition-[color,box-shadow,background-color] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 md:text-sm dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 resize-none"
             />
             <Button type="submit" className="w-full">
               Submit
