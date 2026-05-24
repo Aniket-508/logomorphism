@@ -33,26 +33,26 @@ const ToggleGroup = ({
     spacing?: number;
     orientation?: "horizontal" | "vertical";
   }) => (
-    <ToggleGroupPrimitive
-      data-slot="toggle-group"
-      data-variant={variant}
-      data-size={size}
-      data-spacing={spacing}
-      data-orientation={orientation}
-      style={{ "--gap": spacing } as React.CSSProperties}
-      className={cn(
-        "group/toggle-group flex w-fit flex-row items-center gap-[--spacing(var(--gap))] data-[spacing=0]:data-[variant=outline]:rounded-3xl data-vertical:flex-col data-vertical:items-stretch",
-        className
-      )}
-      {...props}
+  <ToggleGroupPrimitive
+    data-slot="toggle-group"
+    data-variant={variant}
+    data-size={size}
+    data-spacing={spacing}
+    data-orientation={orientation}
+    style={{ "--gap": spacing } as React.CSSProperties}
+    className={cn(
+      "group/toggle-group flex w-fit flex-row items-center gap-[--spacing(var(--gap))] data-[spacing=0]:data-[variant=outline]:rounded-3xl data-vertical:flex-col data-vertical:items-stretch",
+      className
+    )}
+    {...props}
+  >
+    <ToggleGroupContext.Provider
+      value={{ orientation, size, spacing, variant }}
     >
-      <ToggleGroupContext.Provider
-        value={{ orientation, size, spacing, variant }}
-      >
-        {children}
-      </ToggleGroupContext.Provider>
-    </ToggleGroupPrimitive>
-  );
+      {children}
+    </ToggleGroupContext.Provider>
+  </ToggleGroupPrimitive>
+);
 
 const ToggleGroupItem = ({
   className,

@@ -1,7 +1,6 @@
 "use client";
 
 import { parseAsStringLiteral, useQueryState } from "nuqs";
-import { Grid3x3Icon, TableIcon, LayersIcon } from "lucide-react";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
@@ -9,9 +8,9 @@ const sizeOptions = ["s", "m", "l"] as const;
 type GridSize = (typeof sizeOptions)[number];
 
 const sizes = [
-  { icon: Grid3x3Icon, key: "s" as const },
-  { icon: TableIcon, key: "m" as const },
-  { icon: LayersIcon, key: "l" as const },
+  { key: "s" as const },
+  { key: "m" as const },
+  { key: "l" as const },
 ];
 
 export default function SizeToggle() {
@@ -30,19 +29,16 @@ export default function SizeToggle() {
         variant="outline"
         spacing={0}
       >
-        {sizes.map((s) => {
-          const Icon = s.icon;
-          return (
-            <ToggleGroupItem
-              key={s.key}
-              value={s.key}
-              className="px-3"
-              aria-label={`${s.key.toUpperCase()} size`}
-            >
-              <Icon className="size-3.5" />
-            </ToggleGroupItem>
-          );
-        })}
+        {sizes.map((s) => (
+          <ToggleGroupItem
+            key={s.key}
+            value={s.key}
+            className="px-3"
+            aria-label={`${s.key.toUpperCase()} size`}
+          >
+            {s.key.toUpperCase()}
+          </ToggleGroupItem>
+        ))}
       </ToggleGroup>
     </div>
   );

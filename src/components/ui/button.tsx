@@ -45,11 +45,11 @@ const Button = ({
   size = "default",
   ...props
 }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) => (
-    <ButtonPrimitive
-      data-slot="button"
-      className={cn(buttonVariants({ className, size, variant }))}
-      {...props}
-    />
-  );
+  <ButtonPrimitive
+    data-slot="button"
+    className={cn(buttonVariants({ className, size, variant }))}
+    {...props}
+  />
+);
 
 export { Button, buttonVariants };

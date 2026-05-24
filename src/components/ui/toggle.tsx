@@ -34,11 +34,11 @@ const Toggle = ({
   size = "default",
   ...props
 }: TogglePrimitive.Props & VariantProps<typeof toggleVariants>) => (
-    <TogglePrimitive
-      data-slot="toggle"
-      className={cn(toggleVariants({ className, size, variant }))}
-      {...props}
-    />
-  );
+  <TogglePrimitive
+    data-slot="toggle"
+    className={cn(toggleVariants({ className, size, variant }))}
+    {...props}
+  />
+);
 
 export { Toggle, toggleVariants };

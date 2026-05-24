@@ -4,7 +4,7 @@ import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
 import { cva } from "class-variance-authority";
 import type { VariantProps } from "class-variance-authority";
-import { PanelLeftIcon } from "lucide-react";
+import { PanelLeftIcon, PanelRightIcon } from "lucide-react";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -275,7 +275,14 @@ const SidebarTrigger = ({
       }}
       {...props}
     >
-      <PanelLeftIcon className="rtl:rotate-180" />
+      <PanelLeftIcon
+        data-sidebar="trigger-left"
+        className="rtl:rotate-180 group-has-[[data-slot=sidebar][data-side=right]]/sidebar-wrapper:hidden"
+      />
+      <PanelRightIcon
+        data-sidebar="trigger-right"
+        className="hidden rtl:rotate-180 group-has-[[data-slot=sidebar][data-side=right]]/sidebar-wrapper:block"
+      />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );

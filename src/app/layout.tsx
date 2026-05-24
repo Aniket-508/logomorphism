@@ -54,7 +54,7 @@ export default function RootLayout({
       >
         <NuqsAdapter>
           <ThemeProvider>
-            <SidebarProvider>
+            <SidebarProvider defaultOpen={false}>
               <HeaderControls />
               {children}
               <Toaster position="top-center" />

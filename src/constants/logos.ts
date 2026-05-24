@@ -176,9 +176,11 @@ export const logos: Logo[] = [
   },
 ];
 
-const getLogoById = (id: string): Logo | undefined => logos.find((l) => l.id === id);
+const getLogoById = (id: string): Logo | undefined =>
+  logos.find((l) => l.id === id);
 
-const getLogosByCategory = (category: Category): Logo[] => logos.filter((l) => l.category === category);
+const getLogosByCategory = (category: Category): Logo[] =>
+  logos.filter((l) => l.category === category);
 
 const getAdjacentLogo = (id: string, direction: 1 | -1): Logo | undefined => {
   const idx = logos.findIndex((l) => l.id === id);

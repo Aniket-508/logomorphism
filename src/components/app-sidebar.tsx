@@ -1,23 +1,20 @@
 "use client";
 
-import { PanelLeftIcon } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-import { categories, logos } from "@/constants/logos";
-import type { Category } from "@/constants/logos";
+import Link from "next/link";
 
 import {
   SidebarHeader,
   SidebarContent,
   Sidebar,
-  SidebarTrigger,
   SidebarTitle,
   SidebarDescription,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarFooter,
-} from "./ui/sidebar";
+} from "@/components/ui/sidebar";
+import { categories, logos } from "@/constants/logos";
+import type { Category } from "@/constants/logos";
 
 const countByCategory = (key: string) =>
   logos.filter((l) => l.category === key).length;
@@ -29,13 +26,6 @@ const handleSelect = (_category: Category | null) => {
 
 const AppSidebar = () => (
   <Sidebar side="right">
-    <SidebarTrigger
-      render={() => (
-        <Button variant="outline" size="icon-sm">
-          <PanelLeftIcon className="size-4" />
-        </Button>
-      )}
-    />
     <SidebarHeader>
       <SidebarTitle>Collections</SidebarTitle>
       <SidebarDescription>Filter logos by collection</SidebarDescription>
@@ -43,27 +33,27 @@ const AppSidebar = () => (
     <SidebarContent>
       <SidebarMenu>
         <SidebarMenuItem>
-          <SidebarMenuButton render={<a href="/" />}>
+          <SidebarMenuButton render={<Link href="/" />}>
             All Logos ({logos.length})
           </SidebarMenuButton>
-          {categories.map((cat) => (
-            <SidebarMenuItem key={cat.key}>
-              <SidebarMenuButton
-                render={<a href={`/category/${cat.key}`} />}
-                isActive={true}
-                onClick={() => handleSelect(cat.key)}
-              >
-                {cat.emoji} {cat.label} ({countByCategory(cat.key)})
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
         </SidebarMenuItem>
+        {categories.map((cat) => (
+          <SidebarMenuItem key={cat.key}>
+            <SidebarMenuButton
+              render={<Link href={`/category/${cat.key}`} />}
+              isActive={true}
+              onClick={() => handleSelect(cat.key)}
+            >
+              {cat.emoji} {cat.label} ({countByCategory(cat.key)})
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        ))}
       </SidebarMenu>
     </SidebarContent>
     <SidebarFooter>
       <SidebarMenu>
         <SidebarMenuItem>
-          <SidebarMenuButton render={<a href="/" />}>
+          <SidebarMenuButton render={<Link href="/" />}>
             Home Grid
           </SidebarMenuButton>
         </SidebarMenuItem>
