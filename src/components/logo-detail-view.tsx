@@ -7,42 +7,15 @@ import {
   Share2Icon,
   FlagIcon,
   DownloadIcon,
-  XIcon,
 } from "lucide-react";
 import { useState, useCallback, useRef } from "react";
 
+import ReportIssueModal from "@/components/report-issue-modal";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { TooltipButton } from "@/components/ui/tooltip-button";
 import type { Logo } from "@/constants/logos";
-
-import ReportIssueModal from "./report-issue-modal";
-
-const TooltipButton = ({
-  label,
-  icon,
-  onClick,
-  active,
-}: {
-  label: string;
-  icon: React.ReactNode;
-  onClick: () => void;
-  active?: boolean;
-}) => {
-  const btn = (
-    <Button
-      variant="outline"
-      size="icon-sm"
-      onClick={onClick}
-      data-state={active ? "on" : undefined}
-      className="data-[state=on]:bg-muted"
-      aria-label={label}
-    >
-      {icon}
-    </Button>
-  );
-
-  return btn;
-};
 
 interface Props {
   logo: Logo;
@@ -151,26 +124,17 @@ const LogoDetailView = ({
             />
           </div>
 
-          <div className="p-5 space-y-3">
+          <div className="p-4 space-y-4">
             <div className="flex items-start justify-between">
-              <div>
-                <h2 className="text-lg font-semibold text-foreground">
+              <div className="space-y-1">
+                <span className="inline-block text-xs text-muted-foreground">
+                  {logo.category.charAt(0).toUpperCase() +
+                    logo.category.slice(1)}
+                </span>
+                <h2 className="text-3xl font-semibold text-foreground">
                   {logo.brand}
                 </h2>
-                <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-xs font-medium bg-muted text-muted-foreground">
-                  {logo.category}
-                </span>
               </div>
-              {!isPage && onClose && (
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  onClick={onClose}
-                  aria-label="Close"
-                >
-                  <XIcon className="size-4" />
-                </Button>
-              )}
             </div>
 
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -179,12 +143,9 @@ const LogoDetailView = ({
 
             <div className="flex flex-wrap gap-1.5">
               {logo.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-2 py-0.5 rounded text-xs bg-muted text-muted-foreground"
-                >
+                <Badge key={tag} variant="secondary">
                   #{tag}
-                </span>
+                </Badge>
               ))}
             </div>
 
@@ -194,34 +155,37 @@ const LogoDetailView = ({
               {logo.hasAudio && (
                 <TooltipButton
                   label={playing ? "Stop" : "Listen"}
-                  icon={
-                    playing ? (
-                      <span className="text-sm">⏹</span>
-                    ) : (
-                      <Volume2Icon className="size-4" />
-                    )
-                  }
+                  variant="outline"
+                  size="icon-sm"
+                  data-state={playing ? "on" : undefined}
+                  className="data-[state=on]:bg-muted"
                   onClick={handleAudio}
-                  active={playing}
-                />
+                >
+                  {playing ? (
+                    <span className="text-sm">⏹</span>
+                  ) : (
+                    <Volume2Icon />
+                  )}
+                </TooltipButton>
               )}
               <TooltipButton
                 label="Copy link"
-                icon={<Share2Icon className="size-4" />}
+                variant="outline"
+                size="icon-sm"
                 onClick={handleShare}
-              />
+              >
+                <Share2Icon />
+              </TooltipButton>
               <TooltipButton
                 label="Report issue"
-                icon={<FlagIcon className="size-4" />}
+                variant="outline"
+                size="icon-sm"
                 onClick={() => setReportOpen(true)}
-              />
-              <Button
-                variant="default"
-                size="sm"
-                onClick={handleDownload}
-                className="ml-auto"
               >
-                <DownloadIcon className="size-4" />
+                <FlagIcon />
+              </TooltipButton>
+              <Button size="sm" onClick={handleDownload} className="ml-auto">
+                <DownloadIcon />
                 Download
               </Button>
             </div>

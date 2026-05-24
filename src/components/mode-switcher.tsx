@@ -1,34 +1,22 @@
 "use client";
 
 import { ThemeIcon } from "@/components/icons";
-import { Button } from "@/components/ui/button";
-import { Kbd } from "@/components/ui/kbd";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { TooltipButton } from "@/components/ui/tooltip-button";
 import { useThemeToggle } from "@/hooks/use-theme-toggle";
 
 export const ModeSwitcher = () => {
   const { toggleTheme } = useThemeToggle();
 
   return (
-    <Tooltip>
-      <TooltipTrigger
-        render={
-          <Button variant="outline" size="icon-sm" onClick={toggleTheme} />
-        }
-      >
-        <ThemeIcon className="size-4.5" strokeWidth="2" />
-        <span className="sr-only">Toggle theme</span>
-      </TooltipTrigger>
-      <TooltipContent className="pr-2 pl-3">
-        <div className="flex items-center gap-3">
-          Toggle Mode
-          <Kbd>D</Kbd>
-        </div>
-      </TooltipContent>
-    </Tooltip>
+    <TooltipButton
+      label="Toggle theme"
+      shortcut="D"
+      variant="outline"
+      size="icon-sm"
+      onClick={toggleTheme}
+    >
+      <ThemeIcon className="size-4.5" strokeWidth="2" />
+      <span className="sr-only">Toggle theme</span>
+    </TooltipButton>
   );
 };
